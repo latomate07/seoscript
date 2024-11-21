@@ -1,15 +1,17 @@
-import { readFile } from 'fs/promises';
-import { rules } from '../rules';
-export class StaticAnalyzer {
-    rules;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StaticAnalyzer = void 0;
+const promises_1 = require("fs/promises");
+const rules_1 = require("../rules");
+class StaticAnalyzer {
     constructor(customRules) {
-        this.rules = customRules || rules;
+        this.rules = customRules || rules_1.rules;
     }
     async analyze(options) {
         if (!options.filePath) {
             throw new Error('File path is required for static analysis');
         }
-        const content = await readFile(options.filePath, 'utf-8');
+        const content = await (0, promises_1.readFile)(options.filePath, 'utf-8');
         const results = this.rules.map((rule) => ({
             rule: rule.id,
             ...rule.validate(content),
@@ -25,3 +27,4 @@ export class StaticAnalyzer {
         };
     }
 }
+exports.StaticAnalyzer = StaticAnalyzer;

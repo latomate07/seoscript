@@ -1,4 +1,16 @@
 import { SeoRule } from '../types';
 export declare const titleRule: SeoRule;
 export declare const metaDescriptionRule: SeoRule;
+export declare const imageAltRule: SeoRule;
+export declare const headerHierarchyRule: SeoRule;
+export declare const canonicalTagRule: SeoRule;
+export declare const robotsMetaTagRule: SeoRule;
+export declare const viewportMetaTagRule: SeoRule;
+export declare const openGraphRule: SeoRule;
+export declare const languageAttributeRule: SeoRule;
+export declare const faviconRule: SeoRule;
+export declare const imageDimensionsRule: SeoRule;
+export declare const structuredDataRule: SeoRule;
+export declare const mobileFriendlyRule: SeoRule;
+export declare const httpsUsageRule: SeoRule;
 export declare const rules: SeoRule[];
