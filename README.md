@@ -37,6 +37,12 @@ seoscript analyze --file ./index.html
 - `--file <path>`: Local file path to analyze
 - `--timeout <ms>`: Timeout for dynamic analysis (default: 30000ms)
 
+# Example Usage
+
+<p align="left">
+  <img width="auto" height="300" src="art/example.png">
+</p>
+
 ## Development
 
 ### Setup
