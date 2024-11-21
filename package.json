@@ -1,6 +1,6 @@
 {
   "name": "seoscript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A comprehensive SEO analysis tool for modern web applications",
   "main": "dist/index.js",
   "type": "module",
@@ -15,7 +15,16 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install"
   },
-  "keywords": ["seo", "analysis", "typescript", "cli", "web", "react", "vue", "angular"],
+  "keywords": [
+    "seo",
+    "analysis",
+    "typescript",
+    "cli",
+    "web",
+    "react",
+    "vue",
+    "angular"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
