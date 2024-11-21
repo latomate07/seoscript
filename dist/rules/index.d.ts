@@ -1,4 +1,4 @@
-import { SeoRule } from '../types';
+import { SeoRule } from '../types/index.js';
 export declare const titleRule: SeoRule;
 export declare const metaDescriptionRule: SeoRule;
 export declare const imageAltRule: SeoRule;
@@ -13,4 +13,9 @@ export declare const imageDimensionsRule: SeoRule;
 export declare const structuredDataRule: SeoRule;
 export declare const mobileFriendlyRule: SeoRule;
 export declare const httpsUsageRule: SeoRule;
+export declare const internalLinksRule: SeoRule;
+export declare const contentLengthRule: SeoRule;
+export declare const keywordsDensityRule: SeoRule;
+export declare const socialMediaTagsRule: SeoRule;
+export declare const urlStructureRule: SeoRule;
 export declare const rules: SeoRule[];

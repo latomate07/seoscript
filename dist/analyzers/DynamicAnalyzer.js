@@ -1,21 +1,16 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DynamicAnalyzer = void 0;
-const puppeteer_1 = __importDefault(require("puppeteer"));
-const rules_1 = require("../rules");
-class DynamicAnalyzer {
+import puppeteer from 'puppeteer';
+import { rules } from '../rules/index.js';
+export class DynamicAnalyzer {
+    rules;
     constructor(customRules) {
-        this.rules = customRules || rules_1.rules;
+        this.rules = customRules || rules;
     }
     async analyze(options) {
         if (!options.url) {
             throw new Error('URL is required for dynamic analysis');
         }
-        const browser = await puppeteer_1.default.launch({
-            headless: "new"
+        const browser = await puppeteer.launch({
+            headless: true
         });
         const page = await browser.newPage();
         try {
@@ -43,4 +38,3 @@ class DynamicAnalyzer {
         }
     }
 }
-exports.DynamicAnalyzer = DynamicAnalyzer;

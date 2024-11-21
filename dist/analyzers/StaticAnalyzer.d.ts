@@ -1,4 +1,4 @@
-import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types';
+import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types/index.js';
 export declare class StaticAnalyzer {
     private rules;
     constructor(customRules?: SeoRule[]);

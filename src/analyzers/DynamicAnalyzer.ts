@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
-import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types';
-import { rules } from '../rules';
+import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types/index.js';
+import { rules } from '../rules/index.js';
 
 export class DynamicAnalyzer {
   private rules: SeoRule[];
@@ -15,7 +15,7 @@ export class DynamicAnalyzer {
     }
 
     const browser = await puppeteer.launch({
-      headless: "new"
+      headless: true
     });
     const page = await browser.newPage();
 

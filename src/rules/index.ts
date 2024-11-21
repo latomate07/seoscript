@@ -1,4 +1,4 @@
-import { SeoRule } from '../types';
+import { SeoRule } from '../types/index.js';
 
 // Rule: Title Tag
 export const titleRule: SeoRule = {

@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
-import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types';
-import { rules } from '../rules';
+import { AnalysisResult, AnalyzerOptions, SeoRule } from '../types/index.js';
+import { rules } from '../rules/index.js';
 
 export class StaticAnalyzer {
   private rules: SeoRule[];

@@ -2,9 +2,9 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import ora from 'ora';
-import { StaticAnalyzer } from '../analyzers/StaticAnalyzer';
-import { DynamicAnalyzer } from '../analyzers/DynamicAnalyzer';
-import { AnalysisResult } from '../types';
+import { StaticAnalyzer } from '../analyzers/StaticAnalyzer.js';
+import { DynamicAnalyzer } from '../analyzers/DynamicAnalyzer.js';
+import { AnalysisResult } from '../types/index.js';
 
 const program = new Command();
 

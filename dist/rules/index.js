@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.rules = exports.httpsUsageRule = exports.mobileFriendlyRule = exports.structuredDataRule = exports.imageDimensionsRule = exports.faviconRule = exports.languageAttributeRule = exports.openGraphRule = exports.viewportMetaTagRule = exports.robotsMetaTagRule = exports.canonicalTagRule = exports.headerHierarchyRule = exports.imageAltRule = exports.metaDescriptionRule = exports.titleRule = void 0;
 // Rule: Title Tag
-exports.titleRule = {
+export const titleRule = {
     id: 'title',
     name: 'Title Tag',
     description: 'Checks if the page has a title tag, its length, and uniqueness.',
@@ -42,7 +39,7 @@ exports.titleRule = {
     },
 };
 // Rule: Meta Description
-exports.metaDescriptionRule = {
+export const metaDescriptionRule = {
     id: 'meta-description',
     name: 'Meta Description',
     description: 'Checks if the page has a meta description and its length.',
@@ -74,7 +71,7 @@ exports.metaDescriptionRule = {
     },
 };
 // Rule: Image Alt Attributes
-exports.imageAltRule = {
+export const imageAltRule = {
     id: 'image-alt',
     name: 'Image Alt Attributes',
     description: 'Checks if all images have alt attributes.',
@@ -98,7 +95,7 @@ exports.imageAltRule = {
     },
 };
 // Rule: Header Tag Hierarchy
-exports.headerHierarchyRule = {
+export const headerHierarchyRule = {
     id: 'header-hierarchy',
     name: 'Header Tag Hierarchy',
     description: 'Checks the logical order and presence of header tags (H1 to H6).',
@@ -139,7 +136,7 @@ exports.headerHierarchyRule = {
     },
 };
 // Rule: Canonical Tag
-exports.canonicalTagRule = {
+export const canonicalTagRule = {
     id: 'canonical-tag',
     name: 'Canonical Tag',
     description: 'Checks if the page has a canonical URL defined.',
@@ -161,7 +158,7 @@ exports.canonicalTagRule = {
     },
 };
 // Rule: Robots Meta Tag
-exports.robotsMetaTagRule = {
+export const robotsMetaTagRule = {
     id: 'robots-meta-tag',
     name: 'Robots Meta Tag',
     description: 'Checks if the page has a robots meta tag with correct directives.',
@@ -191,7 +188,7 @@ exports.robotsMetaTagRule = {
     },
 };
 // Rule: Viewport Meta Tag
-exports.viewportMetaTagRule = {
+export const viewportMetaTagRule = {
     id: 'viewport-meta-tag',
     name: 'Viewport Meta Tag',
     description: 'Checks if the page has a viewport meta tag for responsive design.',
@@ -213,7 +210,7 @@ exports.viewportMetaTagRule = {
     },
 };
 // Rule: Open Graph Tags
-exports.openGraphRule = {
+export const openGraphRule = {
     id: 'open-graph-tags',
     name: 'Open Graph Tags',
     description: 'Checks if essential Open Graph meta tags are present.',
@@ -244,7 +241,7 @@ exports.openGraphRule = {
     },
 };
 // Rule: Language Attribute
-exports.languageAttributeRule = {
+export const languageAttributeRule = {
     id: 'language-attribute',
     name: 'Language Attribute',
     description: 'Checks if the <html> tag has a valid lang attribute.',
@@ -274,7 +271,7 @@ exports.languageAttributeRule = {
     },
 };
 // Rule: Favicon Presence
-exports.faviconRule = {
+export const faviconRule = {
     id: 'favicon',
     name: 'Favicon',
     description: 'Checks if a favicon is linked in the head section.',
@@ -296,7 +293,7 @@ exports.faviconRule = {
     },
 };
 // Rule: Image Dimensions
-exports.imageDimensionsRule = {
+export const imageDimensionsRule = {
     id: 'image-dimensions',
     name: 'Image Dimensions',
     description: 'Checks if images have width and height attributes to prevent layout shifts.',
@@ -320,7 +317,7 @@ exports.imageDimensionsRule = {
     },
 };
 // Rule: Structured Data (Schema.org)
-exports.structuredDataRule = {
+export const structuredDataRule = {
     id: 'structured-data',
     name: 'Structured Data',
     description: 'Checks if structured data (JSON-LD) is present for rich results.',
@@ -342,7 +339,7 @@ exports.structuredDataRule = {
     },
 };
 // Rule: Mobile-Friendly Viewport
-exports.mobileFriendlyRule = {
+export const mobileFriendlyRule = {
     id: 'mobile-friendly',
     name: 'Mobile-Friendly',
     description: 'Checks if the page is mobile-friendly (responsive design).',
@@ -364,7 +361,7 @@ exports.mobileFriendlyRule = {
     },
 };
 // Rule: HTTPS Usage
-exports.httpsUsageRule = {
+export const httpsUsageRule = {
     id: 'https-usage',
     name: 'HTTPS Usage',
     description: 'Checks if all resources are loaded over HTTPS.',
@@ -386,20 +383,212 @@ exports.httpsUsageRule = {
         };
     },
 };
-// Ajouter les nouvelles règles à votre ensemble de règles
-exports.rules = [
-    exports.titleRule,
-    exports.metaDescriptionRule,
-    exports.imageAltRule,
-    exports.headerHierarchyRule,
-    exports.canonicalTagRule,
-    exports.robotsMetaTagRule,
-    exports.viewportMetaTagRule,
-    exports.openGraphRule,
-    exports.languageAttributeRule,
-    exports.faviconRule,
-    exports.imageDimensionsRule,
-    exports.structuredDataRule,
-    exports.mobileFriendlyRule,
-    exports.httpsUsageRule,
+/// Rule: Internal Links
+export const internalLinksRule = {
+    id: 'internal-links',
+    name: 'Internal Links',
+    description: 'Checks internal links for descriptive anchor texts and valid URLs.',
+    weight: 7,
+    validate: (content) => {
+        const internalLinks = content.match(/<a[^>]+href=["'](?!https?:\/\/)[^"']+["'][^>]*>.*?<\/a>/gi) || [];
+        const issues = [];
+        for (const link of internalLinks) {
+            const anchorText = link.match(/>([^<]+)</)?.[1]?.trim();
+            if (!anchorText || anchorText.toLowerCase() === 'click here' || anchorText.toLowerCase() === 'read more') {
+                issues.push(`Non-descriptive anchor text: "${anchorText}" in ${link}`);
+            }
+            const href = link.match(/href=["']([^"']+)["']/)?.[1];
+            if (href && (href === '#' || href === 'javascript:void(0)')) {
+                issues.push(`Invalid or empty href: "${href}" in ${link}`);
+            }
+        }
+        if (issues.length > 0) {
+            return {
+                passed: false,
+                score: Math.max(0, 7 - issues.length),
+                message: `${issues.length} internal link issue(s) found`,
+                details: issues,
+            };
+        }
+        return {
+            passed: true,
+            score: 7,
+            message: 'All internal links have descriptive anchor texts and valid URLs',
+        };
+    },
+};
+// Rule: Content Length
+export const contentLengthRule = {
+    id: 'content-length',
+    name: 'Content Length',
+    description: 'Checks if the page has sufficient unique content.',
+    weight: 8,
+    validate: (content) => {
+        // Extract text content from the HTML
+        const textContent = content
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        const wordCount = textContent.split(/\s+/).length;
+        if (wordCount < 300) {
+            return {
+                passed: false,
+                score: 4,
+                message: `Content is too thin (${wordCount} words). Minimum recommended is 300 words.`,
+                details: ['Consider adding more unique, valuable content'],
+            };
+        }
+        return {
+            passed: true,
+            score: 8,
+            message: `Content length is good (${wordCount} words)`,
+        };
+    },
+};
+// Rule: Keywords Density
+export const keywordsDensityRule = {
+    id: 'keywords-density',
+    name: 'Keywords Density',
+    description: 'Analyzes keyword density and potential keyword stuffing.',
+    weight: 6,
+    validate: (content) => {
+        // Extract text content
+        const textContent = content
+            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .toLowerCase()
+            .trim();
+        const words = textContent.split(/\s+/);
+        const totalWords = words.length;
+        // Create word frequency map
+        const wordFreq = {};
+        words.forEach(word => {
+            if (word.length > 3) { // Ignore small words
+                wordFreq[word] = (wordFreq[word] || 0) + 1;
+            }
+        });
+        // Find words with high density
+        const highDensityWords = Object.entries(wordFreq)
+            .filter(([_, count]) => (count / totalWords) > 0.05) // More than 5% density
+            .map(([word, count]) => `"${word}" (${((count / totalWords) * 100).toFixed(1)}%)`);
+        if (highDensityWords.length > 0) {
+            return {
+                passed: false,
+                score: Math.max(0, 6 - highDensityWords.length),
+                message: 'Potential keyword stuffing detected',
+                details: [
+                    'Words with unusually high density:',
+                    ...highDensityWords,
+                ],
+            };
+        }
+        return {
+            passed: true,
+            score: 6,
+            message: 'Keyword density is natural and well-distributed',
+        };
+    },
+};
+// Rule: Social Media Tags
+export const socialMediaTagsRule = {
+    id: 'social-media-tags',
+    name: 'Social Media Tags',
+    description: 'Checks for presence of Twitter Cards and other social media meta tags.',
+    weight: 5,
+    validate: (content) => {
+        const requiredTags = [
+            { name: 'twitter:card', regex: /<meta[^>]*name=["']twitter:card["'][^>]*>/i },
+            { name: 'twitter:title', regex: /<meta[^>]*name=["']twitter:title["'][^>]*>/i },
+            { name: 'twitter:description', regex: /<meta[^>]*name=["']twitter:description["'][^>]*>/i },
+            { name: 'twitter:image', regex: /<meta[^>]*name=["']twitter:image["'][^>]*>/i }
+        ];
+        const missingTags = requiredTags.filter(tag => !tag.regex.test(content));
+        if (missingTags.length > 0) {
+            return {
+                passed: false,
+                score: Math.max(0, 5 - missingTags.length),
+                message: 'Missing social media meta tags',
+                details: missingTags.map(tag => `Missing ${tag.name}`),
+            };
+        }
+        return {
+            passed: true,
+            score: 5,
+            message: 'All essential social media meta tags are present',
+        };
+    },
+};
+// Rule: URL Structure
+export const urlStructureRule = {
+    id: 'url-structure',
+    name: 'URL Structure',
+    description: 'Analyzes URL structure for SEO best practices.',
+    weight: 6,
+    validate: (content) => {
+        const canonical = content.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["']/i);
+        if (!canonical) {
+            return {
+                passed: false,
+                score: 3,
+                message: 'No canonical URL found to analyze',
+            };
+        }
+        const url = canonical[1];
+        const issues = [];
+        // Check for uppercase characters
+        if (/[A-Z]/.test(url)) {
+            issues.push('URL contains uppercase characters');
+        }
+        // Check for special characters
+        if (/[^a-zA-Z0-9-_/.]/.test(url)) {
+            issues.push('URL contains special characters');
+        }
+        // Check for multiple consecutive hyphens
+        if (/--/.test(url)) {
+            issues.push('URL contains consecutive hyphens');
+        }
+        // Check for very long URL
+        if (url.length > 100) {
+            issues.push('URL is too long (over 100 characters)');
+        }
+        if (issues.length > 0) {
+            return {
+                passed: false,
+                score: Math.max(0, 6 - issues.length),
+                message: 'URL structure issues found',
+                details: issues,
+            };
+        }
+        return {
+            passed: true,
+            score: 6,
+            message: 'URL structure follows SEO best practices',
+        };
+    },
+};
+// Add new rules to the rules array
+export const rules = [
+    titleRule,
+    metaDescriptionRule,
+    imageAltRule,
+    headerHierarchyRule,
+    canonicalTagRule,
+    robotsMetaTagRule,
+    viewportMetaTagRule,
+    openGraphRule,
+    languageAttributeRule,
+    faviconRule,
+    imageDimensionsRule,
+    structuredDataRule,
+    mobileFriendlyRule,
+    httpsUsageRule,
+    internalLinksRule,
+    contentLengthRule,
+    keywordsDensityRule,
+    socialMediaTagsRule,
+    urlStructureRule,
 ];

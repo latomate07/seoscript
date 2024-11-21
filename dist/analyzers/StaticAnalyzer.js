@@ -1,17 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.StaticAnalyzer = void 0;
-const promises_1 = require("fs/promises");
-const rules_1 = require("../rules");
-class StaticAnalyzer {
+import { readFile } from 'fs/promises';
+import { rules } from '../rules/index.js';
+export class StaticAnalyzer {
+    rules;
     constructor(customRules) {
-        this.rules = customRules || rules_1.rules;
+        this.rules = customRules || rules;
     }
     async analyze(options) {
         if (!options.filePath) {
             throw new Error('File path is required for static analysis');
         }
-        const content = await (0, promises_1.readFile)(options.filePath, 'utf-8');
+        const content = await readFile(options.filePath, 'utf-8');
         const results = this.rules.map((rule) => ({
             rule: rule.id,
             ...rule.validate(content),
@@ -27,4 +25,3 @@ class StaticAnalyzer {
         };
     }
 }
-exports.StaticAnalyzer = StaticAnalyzer;
